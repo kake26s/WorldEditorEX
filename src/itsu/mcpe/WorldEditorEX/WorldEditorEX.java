@@ -81,7 +81,7 @@ public class WorldEditorEX extends PluginBase {
                     if(!getProvider(player).isEditing()) {
                         if(block != null && level != null && loc1 != null && loc2 != null) {
                             getServer().broadcastMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.YELLOW + sender.getName() + "がワールドの変更を開始します。");
-                            getServer().getScheduler().scheduleTask(new SetBlockTask(block, level, (Player) sender, loc1, loc2));
+                            getProvider(player).addTask("set", getServer().getScheduler().scheduleTask(new SetBlockTask(block, level, (Player) sender, loc1, loc2)));
 
                         } else {
                             sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "設定されていない項目があります。");
@@ -122,7 +122,7 @@ public class WorldEditorEX extends PluginBase {
                     if(!getProvider(player).isEditing()) {
                         if(block != null && level != null && loc1 != null && loc2 != null) {
                             getServer().broadcastMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.YELLOW + sender.getName() + "がワールドの変更を開始します。");
-                            getServer().getScheduler().scheduleTask(new SetBlockTask(block, level, (Player) sender, loc1, loc2));
+                            getProvider(player).addTask("cut", getServer().getScheduler().scheduleTask(new SetBlockTask(block, level, (Player) sender, loc1, loc2)));
 
                         } else {
                             sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "設定されていない項目があります。");
@@ -181,7 +181,7 @@ public class WorldEditorEX extends PluginBase {
                     if(!getProvider(player).isEditing()) {
                         if(block != null && level != null && loc1 != null && loc2 != null) {
                             getServer().broadcastMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.YELLOW + sender.getName() + "がワールドの変更を開始します。");
-                            getServer().getScheduler().scheduleTask(new ReplaceTask(to, block, level, (Player) sender, loc1, loc2));
+                            getProvider(player).addTask("replace", getServer().getScheduler().scheduleTask(new ReplaceTask(to, block, level, (Player) sender, loc1, loc2)));
 
                         } else {
                             sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "設定されていない項目があります。");
@@ -219,7 +219,7 @@ public class WorldEditorEX extends PluginBase {
                 if(!getProvider(player).isEditing()) {
                     if(level != null && loc1 != null && loc2 != null) {
                         getServer().broadcastMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.YELLOW + sender.getName() + "がワールドの変更を開始します。");
-                        getServer().getScheduler().scheduleTask(new CopyTask(level, (Player) sender, loc1, loc2));
+                        getProvider(player).addTask("copy", getServer().getScheduler().scheduleTask(new CopyTask(level, (Player) sender, loc1, loc2)));
 
                     } else {
                         sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "設定されていない項目があります。");
@@ -248,7 +248,7 @@ public class WorldEditorEX extends PluginBase {
                 if(!getProvider(player).isEditing()) {
                     if(level != null && loc1 != null && loc2 != null && getProvider(player).getCopy() != null) {
                         getServer().broadcastMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.YELLOW + sender.getName() + "がワールドの変更を開始します。");
-                        getServer().getScheduler().scheduleTask(new PasteTask(level, player, player.getLocation(), getProvider(player).getCopy()));
+                        getProvider(player).addTask("paste", getServer().getScheduler().scheduleTask(new PasteTask(level, player, player.getLocation(), getProvider(player).getCopy())));
 
                     } else {
                         sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "設定されていない項目があります。");
@@ -287,7 +287,7 @@ public class WorldEditorEX extends PluginBase {
 
                 player = (Player) sender;
                 sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.YELLOW + "インポート中...");
-                getServer().getScheduler().scheduleTask(new ImportTask(player, new File("plugins/WorldEditorEX/" + args[0] + ".json")));
+                getProvider(player).addTask("import", getServer().getScheduler().scheduleTask(new ImportTask(player, new File("plugins/WorldEditorEX/" + args[0] + ".json"))));
                 return true;
 
             case "xyz":

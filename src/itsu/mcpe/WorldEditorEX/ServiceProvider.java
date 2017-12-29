@@ -6,6 +6,7 @@ import java.util.Map;
 import cn.nukkit.Player;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Location;
+import cn.nukkit.scheduler.TaskHandler;
 
 public class ServiceProvider {
 
@@ -17,6 +18,7 @@ public class ServiceProvider {
     private Player player;
     
     private Map<String, String> data = new HashMap<>();
+    private Map<String, TaskHandler> tasks = new HashMap<>();
 
     private boolean isEditing = false;
 
@@ -40,6 +42,16 @@ public class ServiceProvider {
     
     public void setCopy(Map<String, String> data) {
         this.data = data;
+    }
+    
+    public void addTask(String name, TaskHandler th) {
+    	if(!tasks.containsKey(name)) {
+    		tasks.put(name, th);
+    	}
+    }
+    
+    public TaskHandler getTask(String name) {
+    	return tasks.get(name);
     }
     
     public Map<String, String> getCopy() {

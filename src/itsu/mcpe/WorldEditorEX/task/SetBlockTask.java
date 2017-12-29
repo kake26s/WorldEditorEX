@@ -53,6 +53,7 @@ public class SetBlockTask extends Task {
         }
         
         WorldEditorEX.getInstance().getProvider(player).setEditing(false);
+        WorldEditorEX.getInstance().getProvider(player).getTask("set").cancel();
 
         player.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.AQUA + "処理が終了しました。");
     }

@@ -29,20 +29,18 @@ public class ImportTask extends Task {
         try {
             WorldEditorEX.getInstance().getProvider(player).setCopy((Map<String, String>) new Gson().fromJson(Utils.readFile(file), Map.class));
             player.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.AQUA + "インポートしました。/pasteでペースト可能です。");
-            return;
 
         } catch (IndexOutOfBoundsException e) {
         	player.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "ファイル名を入力してください。");
-            return;
 
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
             player.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "エラーが発生しました。");
-            return;
 
         } catch (IOException e) {
         	player.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "指定されたファイルが見つかりません。");
-            return;
         }
+        
+        WorldEditorEX.getInstance().getProvider(player).getTask("import").cancel();
 	}
 }

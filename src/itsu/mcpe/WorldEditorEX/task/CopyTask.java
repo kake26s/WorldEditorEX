@@ -56,6 +56,7 @@ public class CopyTask extends Task {
         
         WorldEditorEX.getInstance().getProvider(player).setCopy(data);
         WorldEditorEX.getInstance().getProvider(player).setEditing(false);
+        WorldEditorEX.getInstance().getProvider(player).getTask("copy").cancel();
 
         player.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.AQUA + "処理が終了しました。");
 	}
