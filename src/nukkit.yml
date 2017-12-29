@@ -1,7 +1,7 @@
 
 name: WorldEditorEX
 main: itsu.mcpe.WorldEditorEX.WorldEditorEX
-version: 0.0.1
+version: 1.1.0
 author: Itsu
 api: ["1.0.0"]
 

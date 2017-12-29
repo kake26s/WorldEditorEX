@@ -19,6 +19,7 @@ public class EventListener implements Listener {
 			if(e.getPlayer().getInventory().getItemInHand().getId() == Item.WOODEN_AXE) {
 				WorldEditorEX.getInstance().getProvider(e.getPlayer()).setLocation1(e.getBlock().getLocation(), e.getBlock().getLevel());
 				e.getPlayer().sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RESET + "地点1を設定しました。(ブロックID: " + e.getBlock().getId() + ":" + e.getBlock().getDamage() + ")");
+				e.getPlayer().sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RESET + "座標: (" + e.getBlock().getX() + ", " + e.getBlock().getY() + ", " + e.getBlock().getZ() + ")");
 				calculateBlockCount(e.getPlayer());
 				e.setCancelled();
 			}
@@ -32,7 +33,9 @@ public class EventListener implements Listener {
 				if(e.getBlock().getId() == Block.AIR) return;
 				WorldEditorEX.getInstance().getProvider(e.getPlayer()).setLocation2(e.getBlock().getLocation(), e.getBlock().getLevel());
 				e.getPlayer().sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RESET + "地点2を設定しました。(ブロックID: " + e.getBlock().getId() + ":" + e.getBlock().getDamage() + ")");
+				e.getPlayer().sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RESET + "座標: (" + e.getBlock().getX() + ", " + e.getBlock().getY() + ", " + e.getBlock().getZ() + ")");
 				calculateBlockCount(e.getPlayer());
+				e.setCancelled();
 			}
 		}
 	}
