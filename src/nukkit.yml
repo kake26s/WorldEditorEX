@@ -1,0 +1,78 @@
+
+name: WorldEditorEX
+main: itsu.mcpe.WorldEditorEX.WorldEditorEX
+version: 0.0.1
+author: Itsu
+api: ["1.0.0"]
+
+commands:
+
+  set:
+    description: "指定した座標間にブロックを設置します。"
+    usage: "/set [id:meta]"
+    permission: "worldeditorex.set"
+    permission-message: You don't have permission
+    default: op
+
+  cut:
+    description: "指定した座標間のブロックを削除します。"
+    usage: "/cut"
+    permission: "worldeditorex.cut"
+    permission-message: You don't have permission
+    default: op
+
+  replace:
+    description: "指定した座標間のブロックを指定したブロックに置き換えます。"
+    usage: "/replace [置き換えられるブロック id:meta] [置き換えるブロック id:meta]"
+    permission: "worldeditorex.replace"
+    permission-message: You don't have permission
+    default: op
+
+  copy:
+    description: "指定した座標間のブロックをコピーします。"
+    usage: "/copy"
+    permission: "worldeditorex.copy"
+    permission-message: You don't have permission
+    default: op
+
+  paste:
+    description: "指定した座標にペーストします。"
+    usage: "/paste"
+    permission: "worldeditorex.paste"
+    permission-message: You don't have permission
+    default: op
+
+  export:
+    description: "コピーしたオブジェクトを出力します。"
+    usage: "/export [ファイル名]"
+    permission: "worldeditorex.export"
+    permission-message: You don't have permission
+    default: op
+
+  import:
+    description: "指定されたファイル名のオブジェクトをインポートします。"
+    usage: "/import [ファイル名]"
+    permission: "worldeditorex.import"
+    permission-message: You don't have permission
+    default: op
+
+  objects:
+    description: "インポート可能オブジェクトファイルを表示します。"
+    usage: "/objects"
+    permission: "worldeditorex.objects"
+    permission-message: You don't have permission
+    default: op
+
+  xyz:
+    description: "現在の座標を表示します。"
+    usage: "/xyz"
+    permission: "worldeditorex.xyz"
+    permission-message: You don't have permission
+    default: op
+
+  bid:
+    description: "手に持っているアイテムのIDを表示します。"
+    usage: "/bid"
+    permission: "worldeditorex.bid"
+    permission-message: You don't have permission
+    default: op
