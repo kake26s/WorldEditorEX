@@ -20,6 +20,7 @@ import itsu.mcpe.WorldEditorEX.task.ExportTask;
 import itsu.mcpe.WorldEditorEX.task.ImportTask;
 import itsu.mcpe.WorldEditorEX.task.PasteTask;
 import itsu.mcpe.WorldEditorEX.task.ReplaceTask;
+import itsu.mcpe.WorldEditorEX.task.RotateTask;
 import itsu.mcpe.WorldEditorEX.task.SetBlockTask;
 
 public class WorldEditorEX extends PluginBase {
@@ -278,6 +279,31 @@ public class WorldEditorEX extends PluginBase {
             }
 
             return true;
+            
+        case "rotate":
+        	if (sender instanceof ConsoleCommandSender) {
+                sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "ゲーム内から実行してください。");
+                return true;
+            }
+        	
+        	player = (Player) sender;
+        	
+        	if (!getProvider(player).isEditing()) {
+                if (getProvider(player).getCopy() != null) {
+                    player.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.YELLOW + "処理を開始します。");
+                    getProvider(player).addTask("rotate", getServer().getScheduler().scheduleTask(new RotateTask(player, getProvider(player).getCopy())));
+
+                } else {
+                    sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "コピーしてください。");
+                    return true;
+                }
+
+            } else {
+                sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "別の処理を行っています。");
+                return true;
+            }
+        	
+        	return true;
 
         case "export":
             if (sender instanceof ConsoleCommandSender) {
@@ -293,6 +319,7 @@ public class WorldEditorEX extends PluginBase {
                                 new Gson().toJson(getProvider(player).getCopy()).getBytes()));
                 sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.AQUA + "出力が完了しました。");
                 return true;
+                
             } catch (IndexOutOfBoundsException e) {
                 sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "エクスポート名を入力してください。");
                 return true;
@@ -314,6 +341,7 @@ public class WorldEditorEX extends PluginBase {
             if (sender instanceof ConsoleCommandSender) {
                 sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "ゲーム内から実行してください。");
                 return true;
+                
             } else {
                 player = (Player) sender;
                 sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RESET + "現在の座標: (" + player.getX()
@@ -325,6 +353,7 @@ public class WorldEditorEX extends PluginBase {
             if (sender instanceof ConsoleCommandSender) {
                 sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "ゲーム内から実行してください。");
                 return true;
+                
             } else {
                 player = (Player) sender;
                 sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RESET + "アイテムID: "
@@ -342,6 +371,35 @@ public class WorldEditorEX extends PluginBase {
                 }
             }
             return true;
+            
+        case "pos1":
+        	if (sender instanceof ConsoleCommandSender) {
+                sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "ゲーム内から実行してください。");
+                return true;
+            }
+        	
+        	player = (Player) sender;
+        	
+        	WorldEditorEX.getInstance().getProvider(player).setLocation1(player.getLocation(), player.getLevel());
+			player.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RESET + "地点1を設定しました。");
+			player.getPlayer().sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RESET + "座標: (" + player.getX() + ", " + player.getY() + ", " + player.getZ() + ")");
+			EventListener.calculateBlockCount(player);
+			return true;
+			
+        case "pos2":
+        	if (sender instanceof ConsoleCommandSender) {
+                sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "ゲーム内から実行してください。");
+                return true;
+            }
+        	
+        	player = (Player) sender;
+        	
+        	WorldEditorEX.getInstance().getProvider(player).setLocation2(player.getLocation(), player.getLevel());
+			player.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RESET + "地点2を設定しました。");
+			player.getPlayer().sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RESET + "座標: (" + player.getX() + ", " + player.getY() + ", " + player.getZ() + ")");
+			EventListener.calculateBlockCount(player);
+			return true;
+        	
 
         case "wehelp":
             help(sender);
@@ -375,11 +433,14 @@ public class WorldEditorEX extends PluginBase {
         StringBuffer bf = new StringBuffer();
         bf.append(TextFormat.GREEN + "[WorldEditorEX] WorldEditorEX ヘルプ\n");
         bf.append(TextFormat.YELLOW + "コマンド\n");
+        bf.append(TextFormat.AQUA + "/pos1 " + TextFormat.WHITE + "選択範囲1を指定します。\n");
+        bf.append(TextFormat.AQUA + "/pos2 " + TextFormat.WHITE + "選択範囲2を指定します。\n");
         bf.append(TextFormat.AQUA + "/set [id:meta] " + TextFormat.WHITE + "指定した[id:meta]のブロックで指定した範囲を埋め尽くします。引数でブロックを指定しない場合は前回/setをした時のブロックが使われます。\n");
         bf.append(TextFormat.AQUA + "/cut " + TextFormat.WHITE + "指定した範囲のブロックを一括削除します。\n");
         bf.append(TextFormat.AQUA + "/replace [id:meta] [id:meta] " + TextFormat.WHITE + "指定した一つ目の[id:meta]のブロックを二つ目の[id:meta]のブロックに置き換えます。\n");
         bf.append(TextFormat.AQUA + "/copy " + TextFormat.WHITE + "指定した範囲のブロックをコピーします。\n");
         bf.append(TextFormat.AQUA + "/paste " + TextFormat.WHITE + "コピーしたブロックを現在いる地点を基準にペーストします。\n");
+        bf.append(TextFormat.AQUA + "/rotate " + TextFormat.WHITE + "コピーしたブロックを90度回転させます。\n");
         bf.append(TextFormat.AQUA + "/export [ファイル名] " + TextFormat.WHITE + "コピーしたブロックを[ファイル名]のファイルに保存します。\n");
         bf.append(TextFormat.AQUA + "/import [ファイル名] " + TextFormat.WHITE + "[ファイル名]の保存されたブロックを読み込みます。読み込み終了後、/pasteでペーストできます。\n");
         bf.append(TextFormat.AQUA + "/xyz " + TextFormat.WHITE + "現在座標を表示します。\n");
@@ -387,7 +448,7 @@ public class WorldEditorEX extends PluginBase {
         bf.append(TextFormat.AQUA + "/objects " + TextFormat.WHITE + "インポート可能ファイル名一覧を表示します。\n");
         bf.append(TextFormat.AQUA + "/wehelp " + TextFormat.WHITE + "このヘルプを表示します。\n");
         bf.append(TextFormat.YELLOW + "範囲指定の仕方\n");
-        bf.append(TextFormat.WHITE + "木の斧をもってブロックを破壊したところが地点1、同じくタップしたところが地点2となります。\n");
+        bf.append(TextFormat.WHITE + "木の斧をもってブロックを破壊したところ（/pos1コマンドでも可能）が地点1、同じくタップしたところ（/pos2コマンドでも可能）が地点2となります。\n");
         bf.append(TextFormat.YELLOW + "その他\n");
         bf.append(TextFormat.AQUA + "開発: " + TextFormat.WHITE + "Itsu(itsu020402)/"
                 + TextFormat.AQUA + "バージョン: " + TextFormat.WHITE + this.getDescription().getVersion()

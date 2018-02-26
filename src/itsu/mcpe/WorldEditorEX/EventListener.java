@@ -50,7 +50,7 @@ public class EventListener implements Listener {
 		WorldEditorEX.getInstance().removePlayer(event.getPlayer());
 	}
 	
-	private void calculateBlockCount(Player player) {
+	public static void calculateBlockCount(Player player) {
 		try {
 	        int x1 = Math.max((int) WorldEditorEX.getInstance().getProvider(player).getLocation1().getX(), (int) WorldEditorEX.getInstance().getProvider(player).getLocation2().getX());
 	        int y1 = Math.max((int) WorldEditorEX.getInstance().getProvider(player).getLocation1().getY(), (int) WorldEditorEX.getInstance().getProvider(player).getLocation2().getY());

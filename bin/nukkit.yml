@@ -1,7 +1,7 @@
 
 name: WorldEditorEX
 main: itsu.mcpe.WorldEditorEX.WorldEditorEX
-version: 1.2.0
+version: 2.0.0
 author: Itsu
 api: ["1.0.0"]
 
@@ -41,6 +41,13 @@ commands:
     permission: "worldeditorex.paste"
     permission-message: You don't have permission
     default: op
+    
+  rotate:
+    description: "コピーされたブロックを90度回転させます。"
+    usage: "/rotate"
+    permission: "worldeditorex.rotate"
+    permission-message: You don't have permission
+    default: op
 
   export:
     description: "コピーしたオブジェクトを出力します。"
@@ -74,6 +81,20 @@ commands:
     description: "手に持っているアイテムのIDを表示します。"
     usage: "/bid"
     permission: "worldeditorex.bid"
+    permission-message: You don't have permission
+    default: op
+    
+  pos1:
+    description: "選択範囲1を指定します。"
+    usage: "/pos1"
+    permission: "worldeditorex.pos1"
+    permission-message: You don't have permission
+    default: op
+    
+  pos2:
+    description: "選択範囲2を指定します。"
+    usage: "/pos2"
+    permission: "worldeditorex.pos2"
     permission-message: You don't have permission
     default: op
     
