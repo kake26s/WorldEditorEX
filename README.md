@@ -10,7 +10,8 @@ Jupiter/Nukkit用ワールドエディタ
 - ブロック一括変更(/replace from[id:meta] to[id:meta])  
 - コピー(/copy)  
 - ペースト(/paste)  
-- コピーされたオブジェクトの外部エクスポート(/export [Name])  
+- コピーされたオブジェクトの回転  
+- コピーされたオブジェクトの外部エクスポート(/export [Name])  
 - エクスポートされたファイルのインポート(/import [Name]) 
 - インポート可能ファイルリストの表示(/objects)  
 - 手に持っているアイテムのid確認(/bid)  
