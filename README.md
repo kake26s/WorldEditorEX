@@ -1,11 +1,17 @@
 # WorldEditorEX
 Jupiter/Nukkit用ワールドエディタ  
+
+## 親リポジトリ
+<a href="https://github.com/itsu020402/WorldEditorEX">itsu020402/WorldEditorEX</a>
   
 ## ダウンロード
-<a href="https://github.com/itsu020402/Plugins/blob/master/WorldEditorEX.jar">https://github.com/itsu020402/Plugins/blob/master/WorldEditorEX.jar</a>    
+<a href="https://github.com/kake26s/WorldEditorEX/blob/master/build/WorldEditorEX.jar">https://github.com/kake26s/WorldEditorEX/blob/master/build/WorldEditorEX.jar</a>    
+
+## 追加機能
+- ブロック一括ランダム設置
 
 ## 主な機能
-- ブロック一括設置(/set [id:meta])  
+- ブロック一括ランダム設置(/set [id:meta])  
 - ブロック一括削除(/cut)  
 - ブロック一括変更(/replace from[id:meta] to[id:meta])  
 - コピー(/copy)  
