@@ -11,7 +11,7 @@ Jupiter/Nukkit用ワールドエディタ
 - ブロック一括ランダム設置
 
 ## 主な機能
-- ブロック一括ランダム設置(/set [id:meta])  
+- ブロック一括ランダム設置(/set [id:meta,id:meta,...])  
 - ブロック一括削除(/cut)  
 - ブロック一括変更(/replace from[id:meta] to[id:meta])  
 - コピー(/copy)  
