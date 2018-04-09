@@ -1,9 +1,11 @@
 package itsu.mcpe.WorldEditorEX;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.nukkit.item.Item;
 import com.google.gson.Gson;
 
 import cn.nukkit.Player;
@@ -15,13 +17,7 @@ import cn.nukkit.level.Level;
 import cn.nukkit.level.Location;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.TextFormat;
-import itsu.mcpe.WorldEditorEX.task.CopyTask;
-import itsu.mcpe.WorldEditorEX.task.ExportTask;
-import itsu.mcpe.WorldEditorEX.task.ImportTask;
-import itsu.mcpe.WorldEditorEX.task.PasteTask;
-import itsu.mcpe.WorldEditorEX.task.ReplaceTask;
-import itsu.mcpe.WorldEditorEX.task.RotateTask;
-import itsu.mcpe.WorldEditorEX.task.SetBlockTask;
+import itsu.mcpe.WorldEditorEX.task.*;
 
 public class WorldEditorEX extends PluginBase {
 
@@ -66,27 +62,15 @@ public class WorldEditorEX extends PluginBase {
 
             player = (Player) sender;
 
+            ArrayList<Block> blocks = new ArrayList<Block>();
+
             try {
-                if (args[0].contains(":")) {
-                    String[] data = args[0].split(":");
-                    id = Integer.parseInt(data[0]);
-                    meta = Integer.parseInt(data[1]);
-
-                } else {
-                    id = Integer.parseInt(args[0]);
+                for (String text : args[0].split(",", 0)) {
+                    Item item = Item.fromString(text);
+                    blocks.add(Block.get(item.getId(), item.getDamage()));
                 }
-
-                block = Block.get(id, meta);
-
             } catch (IndexOutOfBoundsException e) {
-                if (set != null) {
-                    block = set;
-                } else {
-                    sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "ブロックIDを入力してください。");
-                    return true;
-                }
-            } catch (NumberFormatException e) {
-                sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "ブロックIDには数値を入力してください。");
+                sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "ブロックIDを入力してください。");
                 return true;
             }
 
@@ -95,12 +79,12 @@ public class WorldEditorEX extends PluginBase {
             loc2 = getProvider(player).getLocation2();
 
             if (!getProvider(player).isEditing()) {
-                if (block != null && level != null && loc1 != null && loc2 != null) {
-                    set = block;
+                if (blocks.size() != 0 && level != null && loc1 != null && loc2 != null) {
                     getServer().broadcastMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.YELLOW
                             + sender.getName() + "がワールドの変更を開始します。");
                     getProvider(player).addTask("set", getServer().getScheduler()
-                            .scheduleTask(new SetBlockTask(block, level, (Player) sender, loc1, loc2)));
+                            .scheduleTask(new SetBlockRandomTask(blocks, level, (Player) sender, loc1, loc2)));
+
 
                 } else {
                     sender.sendMessage(TextFormat.GREEN + "[WorldEditorEX] " + TextFormat.RED + "設定されていない項目があります。");
